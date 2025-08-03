@@ -9,6 +9,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.12.3"
+    "@astrojs/react": "^4.3.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "astro": "^5.12.3",
+    "bootstrap": "^5.3.3",
+    "html2pdf.js": "^0.10.3",
+    "lucide-react": "^0.536.0",
+    "react": "^19.1.0",
+    "react-bootstrap": "^2.10.9",
+    "react-bootstrap-icons": "^1.11.5",
+    "react-dom": "^19.1.0",
+    "react-transition-group": "^4.4.5",
+    "sweetalert2": "^11.22.2",
+    "sweetalert2-react-content": "^5.1.0",
+    "web-vitals": "^4.2.4",
+    "zustand": "^5.0.3"
   }
 }

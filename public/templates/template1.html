@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resumen de Venta</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 40px;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .client-info {
+      margin-bottom: 30px;
+      padding: 15px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .client-info p {
+      margin: 5px 0;
+    }
+
+    .table-container {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+      text-align: left;
+    }
+
+    td {
+      background-color: #fdfdfd;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .totals {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 400px;
+      margin-left: auto;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      padding: 10px 0;
+    }
+
+    .totals table {
+      width: 100%;
+    }
+
+    .totals td {
+      padding: 8px;
+    }
+
+    .totals td:first-child {
+      font-weight: bold;
+    }
+
+    .totals td:last-child {
+      text-align: right;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    .client-columns {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .column {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Resumen</h1>
+  </div>
+
+  <div class="client-info">
+    <h2>Información del Cliente</h2>
+    <div class="client-columns">
+      <div class="column">
+        <p><span class="bold">Nombre:</span> {{name}}</p>
+        <p><span class="bold">Dirección:</span> {{dir}}</p>
+        <p><span class="bold">Comentarios:</span> {{comment}}</p>
+      </div>
+      <div class="column">
+        <p><span class="bold">Correo:</span> {{mail}}</p>
+        <p><span class="bold">Teléfono:</span> {{telephone}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <h2>Servicios / Productos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre del Servicio</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{table}}
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <table>
+        <tr>
+          <td>Total:</td>
+          <td><strong>${{total}}</strong></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Gracias por tu compra. Este documento no sustituye una factura fiscal.</p>
+  </div>
+</body>
+</html>
