@@ -119,7 +119,14 @@ const ServiceListStep = () => {
 
           <ServiceList />
 
-          <div className="mt-4 border rounded p-3 bg-light">
+          <div
+            className="mt-4 border rounded p-3 bg-light preview-container d-none d-md-block"
+            style={{
+              overflowX: "auto",
+              maxHeight: "500px",
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
             {templateHtml ? (
               <div dangerouslySetInnerHTML={{ __html: getFilledTemplate() }} />
             ) : (
