@@ -15,8 +15,14 @@ export default function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
       <div className="container">
         {/* Logo */}
-        <a className="navbar-brand fw-bold text-primary fs-3" href="#">
-          MiLogo
+        <a className="navbar-brand fw-bold text-primary fs-3" href="/">
+          <img
+            src="/logo_v1.png"
+            alt="MiLogo"
+            style={{ width: "150px", objectFit: "contain" }}
+            className="me-2"
+          />
+          {/* MiLogo */}
         </a>
 
         {/* Botón hamburguesa */}

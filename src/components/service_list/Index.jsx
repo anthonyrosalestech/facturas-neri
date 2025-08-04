@@ -159,6 +159,7 @@ const ServiceList = () => {
       </div>
 
       {/* Vista móvil */}
+      {/* Vista móvil */}
       <div className="d-block d-md-none">
         {forms.map((item, index) => (
           <div className="card mb-3" key={index}>
@@ -167,27 +168,71 @@ const ServiceList = () => {
 
               <div className="mb-2">
                 <strong>Servicio: </strong>
-                {item.productName}
+                {editingIndex === index ? (
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="productName"
+                    value={item.productName}
+                    onChange={(e) => handleInputChange(e, index)}
+                  />
+                ) : (
+                  item.productName
+                )}
               </div>
+
               <div className="mb-2">
                 <strong>Cantidad: </strong>
-                {item.quantity}
+                {editingIndex === index ? (
+                  <input
+                    className="form-control"
+                    type="number"
+                    name="quantity"
+                    value={item.quantity}
+                    onChange={(e) => handleInputChange(e, index)}
+                  />
+                ) : (
+                  item.quantity
+                )}
               </div>
+
               <div className="mb-2">
-                <strong>Precio unitario: </strong>${item.price}
+                <strong>Precio unitario: </strong>
+                {editingIndex === index ? (
+                  <input
+                    className="form-control"
+                    type="number"
+                    name="price"
+                    value={item.price}
+                    onChange={(e) => handleInputChange(e, index)}
+                  />
+                ) : (
+                  `$${item.price}`
+                )}
               </div>
+
               <div className="mb-2">
                 <strong>Subtotal: </strong>$
                 {(item.quantity * item.price).toFixed(2)}
               </div>
 
               <div className="d-flex gap-2 mt-2">
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => handleEditClick(index)}
-                >
-                  Editar
-                </button>
+                {editingIndex === index ? (
+                  <button
+                    className="btn btn-sm btn-success"
+                    onClick={handleSaveClick}
+                  >
+                    Guardar
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => handleEditClick(index)}
+                  >
+                    Editar
+                  </button>
+                )}
+
                 <button
                   className="btn btn-danger btn-sm"
                   onClick={() => removeFormByIndex(index)}
@@ -216,3 +261,4 @@ const ServiceList = () => {
 };
 
 export default ServiceList;
+
