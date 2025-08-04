@@ -28,7 +28,6 @@ const Home = () => {
     (state) => state.setSelectedProcess
   );
 
-  // Pasos según la acción
   const steps = useMemo(() => {
     if (action === "create") return ["Cliente", "Servicios", "Vista previa"];
     if (action === "load") return ["Cliente", "Servicios", "Vista previa"];
@@ -36,15 +35,12 @@ const Home = () => {
   }, [action]);
 
   const handleSelectProcess = (processId) => {
-    console.log("Proceso seleccionado:", processId);
     setSelectedProcess(processId);
     setSelectedProcessId(processId);
-
     if (processId) loadProcess(processId);
   };
 
   const handleStartCreateNew = () => {
-    // Limpiar cualquier proceso seleccionado y estados
     setSelectedProcess("");
     setSelectedProcessId(null);
     setCurrentStep(0);
@@ -59,7 +55,7 @@ const Home = () => {
   };
 
   return (
-    <div className="container py-5 mt-5">
+    <div className="container py-4 mt-2">
       <TransitionGroup>
         {!action && (
           <CSSTransition
@@ -110,33 +106,74 @@ const Home = () => {
             classNames="fade"
             unmountOnExit
           >
-            <div ref={nodeRefSteps} className="row g-5">
-              <ProgressStep
-                steps={steps}
-                currentStep={currentStep}
-                setCurrentStep={setCurrentStep}
-              />
+            <div ref={nodeRefSteps} className="row gy-4 mb-5 pb-3">
+              {/* ProgressStep en móvil ocupa todo arriba */}
+              <div className="col-12 col-md-12">
+                <ProgressStep
+                  steps={steps}
+                  currentStep={currentStep}
+                  setCurrentStep={setCurrentStep}
+                />
+              </div>
 
-              {action === "create" && currentStep === 0 && <CustomerStep />}
+              {/* Contenido dinámico de pasos */}
+              <div className="col-12 col-md-12 pb-3">
+                {action && currentStep === 0 && <CustomerStep />}
+                {action && currentStep === 1 && <ServiceStep />}
+                {action && currentStep === 2 && <ServiceListStep />}
+              </div>
 
-              {action === "load" && currentStep === 0 && <CustomerStep />}
+              {/* StepNavigator fijo en móvil */}
+              {/* <div className="d-md-none position-fixed bottom-0 start-0 w-100 bg-white p-2 shadow">
+                <StepNavigator
+                  currentStep={currentStep}
+                  onBack={handleGoBack}
+                  onNext={() =>
+                    setCurrentStep((s) => Math.min(steps.length - 1, s + 1))
+                  }
+                  maxSteps={steps.length - 1}
+                />
+              </div>
 
-              {action && currentStep === 1 && <ServiceStep />}
-
-              {action && currentStep === 2 && <ServiceListStep />}
-
-              <StepNavigator
-                currentStep={currentStep}
-                onBack={handleGoBack}
-                onNext={() =>
-                  setCurrentStep((s) => Math.min(steps.length - 1, s + 1))
-                }
-                maxSteps={steps.length - 1}
-              />
+              <div className="d-none d-md-block col-12 mt-3">
+                <StepNavigator
+                  currentStep={currentStep}
+                  onBack={handleGoBack}
+                  onNext={() =>
+                    setCurrentStep((s) => Math.min(steps.length - 1, s + 1))
+                  }
+                  maxSteps={steps.length - 1}
+                />
+              </div> */}
             </div>
           </CSSTransition>
         )}
       </TransitionGroup>
+
+      <div className="row">
+        <div className="d-md-none position-fixed bottom-0 start-0 w-100 bg-white p-2 shadow">
+          <StepNavigator
+            currentStep={currentStep}
+            onBack={handleGoBack}
+            onNext={() =>
+              setCurrentStep((s) => Math.min(steps.length - 1, s + 1))
+            }
+            maxSteps={steps.length - 1}
+          />
+        </div>
+
+        {/* En desktop normal */}
+        <div className="d-none d-md-block col-12 mt-3">
+          <StepNavigator
+            currentStep={currentStep}
+            onBack={handleGoBack}
+            onNext={() =>
+              setCurrentStep((s) => Math.min(steps.length - 1, s + 1))
+            }
+            maxSteps={steps.length - 1}
+          />
+        </div>
+      </div>
     </div>
   );
 };

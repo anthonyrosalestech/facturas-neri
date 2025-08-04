@@ -118,13 +118,13 @@ const Customer = () => {
         {selectedProcessId ? "Actualizar" : "Crear proceso"}
       </button>
 
-      <button
+      {/* <button
         type="button"
         className="btn btn-secondary ms-2"
         onClick={() => console.log(useProcessStore.getState().processes)}
       >
         Ver Procesos
-      </button>
+      </button> */}
     </form>
   );
 };
