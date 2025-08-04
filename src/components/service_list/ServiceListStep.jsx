@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useServiceStore } from "@stores/servicesStore.jsx";
 import { useCustomerStore } from "@stores/customerStore.jsx";
+import { useProcessStore } from "@stores/processStore.jsx"; // 👈 Para obtener el proceso seleccionado
 import ServiceList from "@components/service_list/Index.jsx";
 import { calcularTotalCosto, fillTemplate } from "@utils/index.js";
-
-// let html2pdf;
-// if (typeof window !== "undefined") {
-//   html2pdf = require("html2pdf.js");
-// }
 
 const ServiceListStep = () => {
   const [html2pdf, setHtml2pdf] = useState(null);
   const forms = useServiceStore((state) => state.forms);
   const customerForm = useCustomerStore((state) => state.customerForm);
+
+  // const selectedProcess = useProcessStore((state) => state.selectedProcessId); // 👈 ID
+  // const processName = useProcessStore((state) => state.name); // 👈 Nombre (asegúrate que exista en tu store)
+
+  const selectedProcessId = useProcessStore((state) => state.selectedProcessId);
+  const processes = useProcessStore((state) => state.processes);
+
+  const selectedProcess = processes.find((p) => p.id === selectedProcessId);
+  const processName = selectedProcess ? selectedProcess.name : "";
 
   const [templateHtml, setTemplateHtml] = useState("");
   const [total, setTotal] = useState(0);
@@ -35,8 +40,18 @@ const ServiceListStep = () => {
       .then((html) => setTemplateHtml(html));
   }, []);
 
-  const generatePDF = () => {
-    if (!html2pdf) return; // solo cliente
+  // ✅ Función para generar nombre dinámico
+  const getFileName = () => {
+    const date = new Date();
+    const formattedDate = date.toISOString().split("T")[0]; // YYYY-MM-DD
+    const cleanName = (processName || "Proceso").replace(/\s+/g, "-");
+    return `${cleanName}-${
+      selectedProcessId || "ID"
+    }_${formattedDate}_ticket.pdf`;
+  };
+
+  const getFilledTemplate = () => {
+    if (!templateHtml) return "";
 
     const currencyFormatter = new Intl.NumberFormat("es-MX", {
       style: "currency",
@@ -60,7 +75,7 @@ const ServiceListStep = () => {
 
     const getValueOrNA = (val) => (val && val.trim() !== "" ? val : "N/A");
 
-    const htmlFilled = fillTemplate(templateHtml, {
+    return fillTemplate(templateHtml, {
       name: getValueOrNA(customerForm?.customerName),
       dir: getValueOrNA(customerForm?.customerAddress),
       comment: getValueOrNA(customerForm?.customerDescription),
@@ -69,6 +84,12 @@ const ServiceListStep = () => {
       table: tablaHtml,
       total,
     });
+  };
+
+  const generatePDF = () => {
+    if (!html2pdf) return;
+
+    const htmlFilled = getFilledTemplate();
 
     const container = document.createElement("div");
     container.innerHTML = htmlFilled;
@@ -76,7 +97,7 @@ const ServiceListStep = () => {
 
     html2pdf()
       .set({
-        filename: "factura.pdf",
+        filename: getFileName(), // ✅ Usa el nombre dinámico
         html2canvas: { scale: 2 },
         jsPDF: { format: "a4" },
       })
@@ -95,7 +116,16 @@ const ServiceListStep = () => {
               Descargar PDF
             </button>
           </div>
+
           <ServiceList />
+
+          <div className="mt-4 border rounded p-3 bg-light">
+            {templateHtml ? (
+              <div dangerouslySetInnerHTML={{ __html: getFilledTemplate() }} />
+            ) : (
+              <p>Cargando vista previa...</p>
+            )}
+          </div>
         </div>
       </div>
     </div>

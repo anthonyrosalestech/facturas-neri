@@ -10,17 +10,17 @@ export const useProcessStore = create(
       // setProcesses: (processes) => set({ processes }),
 
       // 🟢 Agregar un nuevo proceso
-      addProcess1: (processName, customer, services) =>
-        set((state) => ({
-          processes: [
-            ...state.processes,
-            {
-              id: processName,
-              customer,
-              services,
-            },
-          ],
-        })),
+      // addProcess1: (processName, customer, services) =>
+      //   set((state) => ({
+      //     processes: [
+      //       ...state.processes,
+      //       {
+      //         id: processName,
+      //         customer,
+      //         services,
+      //       },
+      //     ],
+      //   })),
 
       // 🟢 Agregar todos los procesos
       addProcess: (id, name, customer, services) =>
