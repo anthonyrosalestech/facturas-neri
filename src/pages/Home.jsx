@@ -150,30 +150,33 @@ const Home = () => {
         )}
       </TransitionGroup>
 
-      <div className="row">
-        <div className="d-md-none position-fixed bottom-0 start-0 w-100 bg-white p-2 shadow">
-          <StepNavigator
-            currentStep={currentStep}
-            onBack={handleGoBack}
-            onNext={() =>
-              setCurrentStep((s) => Math.min(steps.length - 1, s + 1))
-            }
-            maxSteps={steps.length - 1}
-          />
-        </div>
+      {(action === "create" || (action === "load" && selectedProcess)) && (
+        <div className="row">
+          {/* StepNavigator fijo en móvil */}
+          <div className="d-md-none position-fixed bottom-0 start-0 w-100 bg-white p-2 shadow">
+            <StepNavigator
+              currentStep={currentStep}
+              onBack={handleGoBack}
+              onNext={() =>
+                setCurrentStep((s) => Math.min(steps.length - 1, s + 1))
+              }
+              maxSteps={steps.length - 1}
+            />
+          </div>
 
-        {/* En desktop normal */}
-        <div className="d-none d-md-block col-12 mt-3">
-          <StepNavigator
-            currentStep={currentStep}
-            onBack={handleGoBack}
-            onNext={() =>
-              setCurrentStep((s) => Math.min(steps.length - 1, s + 1))
-            }
-            maxSteps={steps.length - 1}
-          />
+          {/* En desktop normal */}
+          <div className="d-none d-md-block col-12 mt-3">
+            <StepNavigator
+              currentStep={currentStep}
+              onBack={handleGoBack}
+              onNext={() =>
+                setCurrentStep((s) => Math.min(steps.length - 1, s + 1))
+              }
+              maxSteps={steps.length - 1}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
