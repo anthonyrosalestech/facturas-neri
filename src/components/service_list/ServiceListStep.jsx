@@ -82,7 +82,7 @@ const ServiceListStep = () => {
       mail: getValueOrNA(customerForm?.customerEmail),
       telephone: getValueOrNA(customerForm?.customerTelephone),
       table: tablaHtml,
-      total,
+      total: currencyFormatter.format(total),
     });
   };
 

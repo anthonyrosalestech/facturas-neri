@@ -8,13 +8,16 @@ export function calcularTotalCosto(ventas) {
 
 export const fillTemplate = (html, data) => {
   console.log(data);
-  return html
-    .replace(/{{name}}/g, data.name)
-    .replace(/{{mail}}/g, data.mail)
-    .replace(/{{dir}}/g, data.dir)
-    .replace(/{{comment}}/g, data.comment)
-    .replace(/{{telephone}}/g, data.telephone)
-    .replace(/{{date}}/g, new Date().toLocaleDateString())
-    .replace(/{{table}}/g, data.table)
-    .replace(/{{total}}/g, data.total.toFixed(2));
+  return (
+    html
+      .replace(/{{name}}/g, data.name)
+      .replace(/{{mail}}/g, data.mail)
+      .replace(/{{dir}}/g, data.dir)
+      .replace(/{{comment}}/g, data.comment)
+      .replace(/{{telephone}}/g, data.telephone)
+      .replace(/{{date}}/g, new Date().toLocaleDateString())
+      .replace(/{{table}}/g, data.table)
+      // .replace(/{{total}}/g, data.total.toFixed(2));
+      .replace(/{{total}}/g, data.total)
+  );
 };

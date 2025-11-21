@@ -34,6 +34,11 @@ const ServiceList = () => {
     0
   );
 
+  const currencyFormatter = new Intl.NumberFormat("es-MX", {
+    style: "currency",
+    currency: "MXN",
+  });
+
   if (forms.length === 0) {
     return <p className="text-muted">No hay servicios agregados todavía.</p>;
   }
@@ -111,11 +116,13 @@ const ServiceList = () => {
                       onChange={(e) => handleInputChange(e, index)}
                     />
                   ) : (
-                    `$${item.price}`
+                    // `$${item.price}`
+                    currencyFormatter.format(item.price)
                   )}
                 </td>
 
-                <td>${(item.quantity * item.price).toFixed(2)}</td>
+                {/* <td>${(item.quantity * item.price).toFixed(2)}</td> */}
+                {<td>{currencyFormatter.format(item.quantity * item.price)}</td>}
 
                 <td>
                   {editingIndex === index ? (
@@ -147,11 +154,12 @@ const ServiceList = () => {
           <tfoot>
             <tr className="fw-bold">
               <td colSpan="3" className="text-end no-border">
-                Totales:
+                Total:
               </td>
               <td>{totalCantidad}</td>
               <td className="no-border"></td>
-              <td>${totalPrecio.toFixed(2)}</td>
+              {/* <td>${totalPrecio.toFixed(2)}</td> */}
+              <td>{currencyFormatter.format(totalPrecio)}</td>
               <td className="no-border"></td>
             </tr>
           </tfoot>
